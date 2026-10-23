@@ -1,0 +1,74 @@
+analysis,source,year,outcome,estimate,ci_low,ci_high,n_high,n_low,median_high,median_low
+1 high-low,ACLED,2022,spring,0.0403,0.0208,0.0606,420.0,435.0,-0.0068,-0.0521
+1 high-low,ACLED,2022,peak,-0.0501,-0.0727,-0.028,420.0,435.0,-0.0003,0.0564
+1 high-low,ACLED,2022,late,0.0323,0.011,0.0535,420.0,435.0,0.0941,0.0584
+1 high-low,ACLED,2022,late shape (not adj.),0.0307,0.0066,0.0545,420.0,435.0,0.1347,0.0996
+1 high-low,ACLED,2023,spring,0.0796,0.0588,0.1005,261.0,594.0,-0.0107,-0.1079
+1 high-low,ACLED,2023,peak,0.0073,-0.0098,0.0249,261.0,594.0,0.0819,0.0702
+1 high-low,ACLED,2023,late,0.007,-0.0041,0.0168,261.0,594.0,0.0667,0.0635
+1 high-low,ACLED,2023,late shape (not adj.),-0.0,-0.0105,0.0106,261.0,594.0,0.1115,0.1132
+1 high-low,ACLED,2024,spring,0.0523,0.0292,0.076,309.0,582.0,0.0634,-0.0235
+1 high-low,ACLED,2024,peak,0.045,0.0187,0.0697,309.0,582.0,0.0248,-0.01
+1 high-low,ACLED,2024,late,0.037,0.0234,0.0502,309.0,582.0,0.0208,-0.0191
+1 high-low,ACLED,2024,late shape (not adj.),0.0376,0.0212,0.0527,309.0,582.0,0.0006,-0.0445
+1 high-low,UCDP,2022,spring,0.0159,-0.0087,0.0494,70.0,789.0,-0.0277,-0.045
+1 high-low,UCDP,2022,peak,0.0089,-0.0284,0.0439,70.0,789.0,0.0446,0.0413
+1 high-low,UCDP,2022,late,0.027,0.0006,0.0601,70.0,789.0,0.082,0.0636
+1 high-low,UCDP,2022,late shape (not adj.),0.0236,-0.0088,0.0655,70.0,789.0,0.1304,0.1058
+1 high-low,UCDP,2023,spring,0.0878,0.0591,0.1134,61.0,851.0,0.0096,-0.1006
+1 high-low,UCDP,2023,peak,0.0102,-0.0276,0.0312,61.0,851.0,0.091,0.0758
+1 high-low,UCDP,2023,late,0.0062,-0.0055,0.0156,61.0,851.0,0.0702,0.0653
+1 high-low,UCDP,2023,late shape (not adj.),-0.0014,-0.0123,0.0082,61.0,851.0,0.1113,0.1166
+1 high-low,UCDP,2024,spring,0.0727,0.0456,0.0976,116.0,692.0,0.0839,-0.0178
+1 high-low,UCDP,2024,peak,0.0605,0.0259,0.0892,116.0,692.0,0.0495,-0.0107
+1 high-low,UCDP,2024,late,0.0555,0.0421,0.068,116.0,692.0,0.0382,-0.02
+1 high-low,UCDP,2024,late shape (not adj.),0.0541,0.0368,0.0699,116.0,692.0,0.012,-0.046
+2 event study (2022 groups),ACLED,2018,spring,0.0137,-0.0027,0.0304,420.0,435.0,,
+2 event study (2022 groups),ACLED,2019,spring,0.0096,-0.0068,0.0261,420.0,435.0,,
+2 event study (2022 groups),ACLED,2020,spring,0.0421,0.0243,0.059,420.0,435.0,,
+2 event study (2022 groups),ACLED,2021,spring,0.0074,-0.0138,0.0283,420.0,435.0,,
+2 event study (2022 groups),ACLED,2022,spring,0.0403,0.0208,0.0606,420.0,435.0,,
+2 event study (2022 groups),ACLED,2023,spring,0.0901,0.0703,0.1114,420.0,435.0,,
+2 event study (2022 groups),ACLED,2024,spring,0.0277,0.0077,0.0467,420.0,435.0,,
+2 event study (2022 groups),ACLED,2018,peak,-0.0119,-0.032,0.0099,420.0,435.0,,
+2 event study (2022 groups),ACLED,2019,peak,0.0182,-0.0111,0.0443,420.0,435.0,,
+2 event study (2022 groups),ACLED,2020,peak,-0.0105,-0.0311,0.0109,420.0,435.0,,
+2 event study (2022 groups),ACLED,2021,peak,-0.0045,-0.0213,0.0113,420.0,435.0,,
+2 event study (2022 groups),ACLED,2022,peak,-0.0501,-0.0727,-0.028,420.0,435.0,,
+2 event study (2022 groups),ACLED,2023,peak,0.0254,0.0058,0.0449,420.0,435.0,,
+2 event study (2022 groups),ACLED,2024,peak,0.0546,0.0315,0.0808,420.0,435.0,,
+2 event study (2022 groups),ACLED,2018,late,-0.0032,-0.011,0.005,420.0,435.0,,
+2 event study (2022 groups),ACLED,2019,late,0.0034,-0.0086,0.0162,420.0,435.0,,
+2 event study (2022 groups),ACLED,2020,late,-0.0099,-0.0242,0.0054,420.0,435.0,,
+2 event study (2022 groups),ACLED,2021,late,-0.033,-0.0466,-0.0182,420.0,435.0,,
+2 event study (2022 groups),ACLED,2022,late,0.0323,0.011,0.0535,420.0,435.0,,
+2 event study (2022 groups),ACLED,2023,late,0.0148,0.0019,0.0266,420.0,435.0,,
+2 event study (2022 groups),ACLED,2024,late,0.0455,0.0333,0.0566,420.0,435.0,,
+2 event study (2022 groups),ACLED,2018,late shape (not adj.),0.0036,-0.0051,0.0118,420.0,435.0,,
+2 event study (2022 groups),ACLED,2019,late shape (not adj.),0.0211,0.008,0.034,420.0,435.0,,
+2 event study (2022 groups),ACLED,2020,late shape (not adj.),0.0041,-0.0091,0.0166,420.0,435.0,,
+2 event study (2022 groups),ACLED,2021,late shape (not adj.),-0.0289,-0.041,-0.0155,420.0,435.0,,
+2 event study (2022 groups),ACLED,2022,late shape (not adj.),0.0307,0.0066,0.0545,420.0,435.0,,
+2 event study (2022 groups),ACLED,2023,late shape (not adj.),0.0175,0.0047,0.0309,420.0,435.0,,
+2 event study (2022 groups),ACLED,2024,late shape (not adj.),0.0538,0.0389,0.0678,420.0,435.0,,
+3 regression per log(1+events),ACLED,all,spring,0.01,0.0066,0.0134,8332.0,70.0,,
+3 regression per log(1+events),ACLED,all,peak,0.0011,-0.0021,0.0044,8344.0,70.0,,
+3 regression per log(1+events),ACLED,all,late,0.0077,0.0046,0.0108,8344.0,70.0,,
+3 regression per log(1+events),ACLED,all,late shape (not adj.),0.006,0.0034,0.0087,8344.0,70.0,,
+3 regression per log(1+events),UCDP,all,spring,0.014,0.0084,0.0197,8332.0,70.0,,
+3 regression per log(1+events),UCDP,all,peak,0.0081,0.0029,0.0133,8344.0,70.0,,
+3 regression per log(1+events),UCDP,all,late,0.0138,0.0094,0.0182,8344.0,70.0,,
+3 regression per log(1+events),UCDP,all,late shape (not adj.),0.0115,0.0074,0.0155,8344.0,70.0,,
+4 low-exposure mean,ACLED,2022,spring,-0.0324,-0.0479,-0.0162,,435.0,,
+4 low-exposure mean,ACLED,2022,peak,0.0438,0.0301,0.0569,,435.0,,
+4 low-exposure mean,ACLED,2022,late,0.0619,0.0517,0.0719,,435.0,,
+4 low-exposure mean,ACLED,2023,spring,-0.0901,-0.1015,-0.0772,,594.0,,
+4 low-exposure mean,ACLED,2023,peak,0.0678,0.0567,0.0786,,594.0,,
+4 low-exposure mean,ACLED,2023,late,0.0616,0.0541,0.0693,,594.0,,
+4 low-exposure mean,ACLED,2024,spring,-0.0052,-0.0174,0.0078,,582.0,,
+4 low-exposure mean,ACLED,2024,peak,-0.0251,-0.0428,-0.0087,,582.0,,
+4 low-exposure mean,ACLED,2024,late,-0.0183,-0.0268,-0.0103,,582.0,,
+5 Moran's I residuals 2022,ACLED,2022,spring,0.1646,,0.005,1192.0,,,
+5 Moran's I residuals 2022,ACLED,2022,peak,0.3366,,0.005,1192.0,,,
+5 Moran's I residuals 2022,ACLED,2022,late,0.4835,,0.005,1192.0,,,
+5 Moran's I residuals 2022,ACLED,2022,late shape (not adj.),0.4436,,0.005,1192.0,,,

@@ -36,3 +36,26 @@ def test_count_events_near_uses_buffer(tmp_path):
 
     assert count_events_near(events, far_box, "EPSG:3035", buffer_m=10_000) == 0
     assert count_events_near(events, far_box, "EPSG:3035", buffer_m=20_000) == 1
+
+
+def test_season_exposure_window_and_buffer(tmp_path):
+    import geopandas as gpd
+    from agridisrupt.conflict import exposure_group, load_acled_events, season_exposure
+    csv = tmp_path / "acled.csv"
+    pd.DataFrame({
+        "event_id_cnty": ["a", "b", "c", "d", "e"],
+        "event_date": ["2022-02-01", "2022-03-01", "2022-11-15", "2023-05-01", "2022-03-01"],
+        "event_type": ["Battles", "Battles", "Battles", "Protests", "Battles"],
+        "latitude": [49.3, 49.3, 49.3, 49.3, 49.3], "longitude": [36.0] * 5,
+        "geo_precision": [1, 1, 1, 1, 3],
+    }).to_csv(csv, index=False)
+    events = load_acled_events(csv, ["Battles"], 2, bounds=(30, 45, 40, 55))
+    assert sorted(events["event_id_cnty"]) == ["a", "b", "c"]          # protest and imprecise dropped
+    p = events.to_crs("EPSG:3035").geometry.iloc[0]
+    cells = gpd.GeoDataFrame({"cell_id": ["near", "far"]},
+                             geometry=[box(p.x + 3000, p.y, p.x + 8000, p.y + 5000),     # 3 km away
+                                       box(p.x + 20000, p.y, p.x + 25000, p.y + 5000)], crs="EPSG:3035")
+    exp = season_exposure(events, cells, 5000, [2022], "2022-02-24", "10-31").set_index("cell_id")
+    assert exp.loc["near", "events"] == 1      # Feb (pre-war) and Nov (after season) excluded
+    assert exp.loc["far", "events"] == 0
+    assert list(exposure_group(pd.Series([0, 3, 10]), 0, 10)) == ["low", "some", "high"]

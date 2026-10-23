@@ -351,3 +351,40 @@ exposure). Settings in config `exposure:`. Wording rule: "associated with", neve
   differ in place, soil and crop mix — cell effects and the pre-trend check address this partly; occupied areas
   (spring–autumn 2022) may have been unfarmed for reasons of access; ACLED counts reflect reporting intensity;
   abandoned fields can look greener (rule 4), so the sign of an association is not assumed in advance.
+- **RESULTS (run 23 Oct 2026, after the plan above was committed in b69b49a)** — `scripts/run_exposure_analysis.py`,
+  `reports/exposure_results.csv`, `figures/exposure_{groups_map,event_study}.png`. 73,889 ACLED and 22,767 UCDP
+  events in the study area. Cells per group (low / some / high): 2022 435 / 337 / 420; 2023 594 / 337 / 261;
+  2024 582 / 301 / 309; pre-war seasons 0 high. High-exposure cells lie in the north and east, low ones in the
+  south-west (strong spatial separation).
+  1. **High − low, weather-adjusted (ACLED; 95% block-bootstrap interval):**
+     2022 spring +0.040 [0.021, 0.061], **peak −0.050 [−0.073, −0.028]**, late +0.032 [0.011, 0.053];
+     2023 spring **+0.080 [0.059, 0.101]**, peak +0.007 [−0.010, 0.025], late +0.007 [−0.004, 0.017];
+     2024 spring +0.052, peak +0.045, late +0.037 (all intervals above 0). Late shape (not adjusted) follows "late".
+     UCDP (fatal events; high groups only 61–116 cells): 2022 peak +0.009 [−0.028, 0.044] (does NOT replicate the
+     ACLED peak result); 2023 spring +0.088; 2024 all parts +0.06–0.07 (same direction as ACLED).
+  2. **Event study (cells grouped by 2022 exposure):** pre-war high − low differences are not all ≈ 0: spring 2020
+     +0.042 [0.024, 0.059], late 2021 −0.033 [−0.047, −0.018]; peak pre-war −0.012 to +0.018 (all intervals include
+     0). Post-war: peak −0.050 (2022) → +0.025 (2023) → +0.055 (2024); spring +0.040, +0.090, +0.028; late +0.032,
+     +0.015, +0.046.
+  3. **Two-way fixed effects (per unit of log(1+events); cell + year effects; 70 clusters):** spring +0.010
+     [0.007, 0.013], peak +0.001 [−0.002, 0.004], late +0.008 [0.005, 0.011]; UCDP: +0.014, +0.008, +0.014 (all
+     above 0). (0 → 100 events = 4.6 units → spring ≈ +0.046, late ≈ +0.035.)
+  4. **Bias check (RQ1) FAILS for 2022–23:** mean adjusted anomaly in low-exposure cells — 2022 spring −0.032,
+     peak +0.044, late +0.062; 2023 spring −0.090, peak +0.068, late +0.062; 2024 −0.005 / −0.025 / −0.018
+     (intervals exclude 0 except 2024 spring). The model of normal is off by a common, year-level amount in 2022–23
+     even where there was no fighting nearby (weather outside the training range, and/or oblast-wide war effects
+     on markets, inputs and labour that "low exposure" does not exclude). Comparisons are therefore made RELATIVE
+     (high − low, year effects), never as absolute anomalies.
+  5. **Moran's I of regression residuals (2022):** spring 0.17, peak 0.34, late 0.48 (p = 0.005): strong remaining
+     spatial autocorrelation. *Sensitivity (NOT in the plan, added after seeing it):* with 50 km blocks (23) and
+     100 km blocks (9) the 2022 peak difference stays −0.050 [−0.075, −0.023] / [−0.062, −0.016]; the 2022 late
+     difference becomes [0.007, 0.060] / [0.000, 0.078]; regression intervals widen slightly, same conclusions.
+- **Interpretation:** exposure is associated with a different season SHAPE rather than a uniform loss of green:
+  in 2022, high-exposure cells peaked lower than comparable-weather low-exposure cells (pre-war peak differences
+  were ≈ 0), and in 2023–24 they were greener than expected, especially in spring. That pattern is consistent with
+  disrupted sowing and management in 2022 followed by weedy or differently-cropped fields (rule 4) — but it is
+  also consistent with differences between north/east and south-west that the model does not capture.
+- **Limits:** high and low cells are geographically separated, and pre-war differences of up to ±0.04 occur in
+  spring and late season, so only the peak result has a clean pre-trend; the 2022 peak result is not replicated
+  with UCDP; the model of normal is biased in 2022–23 at oblast level; spatial autocorrelation leaves few effective
+  clusters. ACLED counts also reflect reporting. Evidence: suggestive, not conclusive; no causal claim.
