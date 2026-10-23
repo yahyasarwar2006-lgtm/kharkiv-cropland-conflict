@@ -1,0 +1,157 @@
+# Configuration for the Kharkiv oblast pilot (V1).
+# Every setting and decision lives here — change values here,
+# never hard-code them (paths included) in scripts.
+
+study_area:
+  country: "Ukraine"
+  oblast: "Kharkiv"
+  boundary_source: "geoBoundaries"
+  admin_level: "ADM1"
+
+crs:
+  grid: "EPSG:3035"     # equal-area projection, used for the 5 km grid and areas
+  storage: "EPSG:4326"  # lat/lon, used when saving boundary/vector files
+
+grid:
+  cell_size_m: 5000
+  min_cropland_fraction: 0.30   # keep a cell only if >= 30% of it is cropland
+
+time:
+  start_year: 2018
+  end_year: 2024
+  season_start_month: 4    # April
+  season_end_month: 10     # October
+  composite_days: 14       # length of each NDVI composite period
+  # Periods are counted from 1 April each year (period 0 = 1-14 Apr, ...). The 3 days
+  # left at the end of October are folded into the last period.
+
+sentinel2:
+  collection: "sentinel-2-l2a"   # Microsoft Planetary Computer STAC collection id
+  bands: ["B04", "B08", "SCL"]
+  offset_start_date: "2022-01-25"   # processing baseline 04.00 start
+  offset_value: 1000                # reflectance offset to subtract from that date on
+  max_cloud_cover: 20               # skip scenes with more than this % cloud cover
+  # SCL (Scene Classification Layer) classes kept as "clear land" pixels.
+  # 4 = vegetation, 5 = bare soil. Excludes: 0/1 no-data/defective, 2/3 shadow,
+  # 6 water, 7 unclassified, 8/9/10 cloud, 11 snow.
+  valid_scl_classes: [4, 5]
+  # Time series: skip scenes whose whole-tile cloud cover exceeds this (they rarely
+  # have usable pixels over a 20 km block); per-pixel SCL masking does the real work.
+  timeseries_max_scene_cloud: 80
+  offset_min_baseline: "04.00"      # baselines >= this carry the offset (guard check)
+  # Whole-oblast reading resolution. Decision (2 Oct 2026) after Experiment 1b: 20 m gave
+  # practically the same 5 km cell NDVI as 10 m (median |diff| 0.001) at ~1/3 of the time.
+  read_resolution_m: 20
+
+climate:
+  source: "ERA5-Land hourly (Copernicus CDS 'reanalysis-era5-land', CC BY 4.0)"
+  dataset: "reanalysis-era5-land"
+  # Mean variables: all 24 hourly values, downloaded in half-year chunks (a full year
+  # is over the CDS request-size limit of 12000; half a year ~8900), daily mean
+  # computed locally. (ECMWF's ready-made daily-statistics dataset was tried first, but
+  # its queue did not start a single request in 80+ min on 1 Oct 2026.)
+  chunk_months: [["01", "02", "03", "04", "05", "06"], ["07", "08", "09", "10", "11", "12"]]
+  # CDS limits queued requests per user and dataset (31 at once were rejected);
+  # 1 worked, 2 tried on 2 Oct 2026 to speed up a slow overnight queue
+  max_queued_requests: 2
+  start_year: 2015          # extra pre-study years for anomalies (design doc section D)
+  end_year: 2024
+  area: [50.7, 34.6, 48.3, 38.4]   # north, west, south, east (deg); grid extent + ~0.2 deg margin
+  mean_variables: ["2m_temperature", "volumetric_soil_water_layer_1"]   # K, m3/m3 (0-7 cm)
+  # accumulated from 00 UTC; total for day D = value at 00 UTC of day D+1 (ECMWF ERA5-Land docs)
+  sum_variables: ["total_precipitation"]   # metres of water
+  # Per-period features (same 14-day periods as the NDVI composites):
+  precip_windows_days: [30, 60]    # rain in the 30 / 60 days up to each period's last day
+  # "Normal" temperature for the anomaly = mean of the same period over these years.
+  # Decision (1 Oct 2026): all years. Weather is not changed by the war, so
+  # including 2022-24 does not leak the outcome; noted as a deliberate choice.
+  anomaly_baseline_years: [2015, 2024]
+
+cropland:
+  source: "ESA WorldCereal 2021 v100, tc-annual temporary crops (Zenodo 7875105)"
+  aez_ids: [22096, 22190, 22194]   # WorldCereal zones that overlap Kharkiv oblast
+
+# Experiment 1 pilot block — rule fixed 25 Sep 2026, BEFORE looking at any NDVI:
+# candidate cells = centre in the oblast's south-west quadrant (west and south of
+# the oblast centroid); pick the block_cells x block_cells block with the highest
+# mean WorldCereal cropland share. NOTE: "south-west" is measured in the grid CRS
+# (EPSG:3035), whose axes are rotated ~20 deg from true north at Kharkiv, so on a
+# compass this quadrant is closer to west-south-west. Outcome (25 Sep 2026): the
+# exposure check below chose block B (western edge, ~35.2-35.6E, 49.6-49.9N).
+pilot:
+  block_cells: 4          # 4 x 4 cells of 5 km = 20 x 20 km
+  years: [2019, 2020, 2021, 2022, 2023]
+  # Exposure check (added 25 Sep 2026, fixed BEFORE counting any events, no NDVI
+  # seen): compare block A (rule above) with block B (same rule, but cell centres
+  # restricted to the western half of the SW quadrant). Count UCDP GED 26.1 events
+  # within buffer_km of each block in the period, using only where_prec <= 2
+  # (exact, or within 25 km of a known point). Choose the block with fewer events;
+  # on a tie keep A (higher cropland share). UCDP only records events with >= 1
+  # death, so these counts are a lower bound on exposure.
+  exposure_check:
+    period: ["2022-02-24", "2023-12-31"]
+    buffer_km: 10
+    max_where_prec: 2
+
+# Panel (NDVI + climate per cell x year x period). Decision (23 Oct 2026) after the
+# data-quality check: a composite's NDVI is trusted only if >= 50% of the cell's cropland was
+# clear. Below that, values read low (haze at cloud edges): median -0.14 below 1% clear,
+# -0.02 to -0.05 between 1% and 50%, ~0 above 50%. Cloudiness differs by year, so keeping them
+# could create fake year-to-year differences. panel.csv keeps the unfiltered value as ndvi_raw.
+panel:
+  min_valid_share: 0.5
+
+# "Normal" = pre-war seasons (the model of normal is trained on pre-war data only).
+analysis:
+  war_start: "2022-02-24"
+  baseline_years: [2018, 2021]   # first and last pre-war season (inclusive)
+  # Seasonal baseline: expected NDVI of a cell + period = mean over the baseline years that have a usable
+  # value; left empty if fewer than this many years do. For a baseline year itself the other years are used
+  # (leave-one-year-out), so its anomaly is an honest out-of-sample "normal year" reference.
+  baseline_min_years: 2
+  # Season-shape measures per cell x year (decided 23 Oct 2026; abandoned fields can look greener, so shape matters, not only level): peak NDVI, peak timing,
+  # and late-season greenness = mean NDVI of the "late" part (5 Aug - end Oct; brown-down after harvest?),
+  # needing at least late_min_periods usable values. Each gets its own pre-war baseline per cell.
+  late_min_periods: 3
+  # Parts of the season used in summaries and maps: first and last period (inclusive).
+  season_parts:
+    spring: [0, 4]               # 1 Apr - 9 Jun: green-up
+    peak: [5, 8]                 # 10 Jun - 4 Aug: summer peak
+    late: [9, 14]                # 5 Aug - end Oct: harvest / brown-down
+
+# Stage 5 models of "normal" NDVI (decided 23 Oct 2026): target = anomaly vs the cell's seasonal baseline
+# from the training years; models: A seasonal baseline (anomaly 0), B ridge, C gradient boosting
+# (scikit-learn HistGradientBoosting = LightGBM-style). NO past NDVI as input (would carry war effects).
+# Forward-in-time validation only (rule 2).
+models:
+  gdd_base_c: 5                 # growing degree days above 5 °C (common base for cereals)
+  folds:                        # [train years], test year; the LAST fold is the main one
+    - [[2018, 2019], 2020]
+    - [[2018, 2019, 2020], 2021]
+  ridge_alphas: [1, 10, 100, 1000, 10000, 100000, 1000000]   # chosen by leave-one-training-year-out inside training years
+  gbm:                          # fixed, conservative settings (only 3 training seasons -> avoid overfitting)
+    max_iter: 300
+    learning_rate: 0.05
+    max_leaf_nodes: 15
+    min_samples_leaf: 200
+    l2_regularization: 1.0
+
+# Stage 7 conflict exposure — FIXED 23 Oct 2026 BEFORE any anomaly was compared by exposure
+# (only the spatial spread of events was looked at). ACLED export of 23 Oct 2026 (all Europe,
+# 2018-2024; filtered in code). Plan: reports/experiments.md "Experiment 5".
+exposure:
+  source_glob: "acled/ACLED Data_*.csv"       # under data_raw
+  event_types: ["Battles", "Explosions/Remote violence", "Violence against civilians"]   # ACLED political violence
+  max_geo_precision: 2          # 1 exact/town, 2 near a town; drop 3 (region-level only, 0.4% of events)
+  buffer_km: 5                  # count events inside the 5 km cell or within 5 km of it
+  season_end: "10-31"           # events from 1 Jan (2022: from war_start) to 31 Oct of the season's year
+  low_max_events: 0             # low exposure = 0 events in the season
+  high_min_events: 10           # high exposure = 10+ events; 1-9 = "some" (regression only)
+  robustness_buffer_km: 10      # Stage 9 check
+  cluster_block_km: 25          # spatial blocks for clustered uncertainty (5 x 5 cells)
+
+paths:
+  data_raw: "data/raw"
+  data_interim: "data/interim"
+  data_processed: "data/processed"
+  reports_figures: "reports/figures"

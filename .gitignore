@@ -1,0 +1,22 @@
+# data — never commit (raw/interim/processed satellite, climate, conflict data)
+data/
+
+# python
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# jupyter
+.ipynb_checkpoints/
+
+# secrets / credentials
+.env
+*.token
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store

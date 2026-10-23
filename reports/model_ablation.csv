@@ -1,0 +1,9 @@
+inputs,model,MAE,RMSE,bias,R2 NDVI,R2 anomaly,n
+season + place,B ridge,0.0971,0.1265,-0.0238,0.6555,0.0697,15653
++ season + place,C boosting,0.0929,0.1238,-0.0226,0.6704,0.1099,15653
++ rain,B ridge,0.0953,0.1328,-0.0222,0.6204,-0.025,15653
++ rain,C boosting,0.0971,0.1305,-0.0046,0.6335,0.0103,15653
++ temperature,B ridge,0.0881,0.1233,0.0089,0.6728,0.1164,15653
++ temperature,C boosting,0.0886,0.1229,0.0041,0.6749,0.122,15653
++ soil moisture,B ridge,0.088,0.1232,0.0082,0.6733,0.1177,15653
++ soil moisture,C boosting,0.0883,0.1226,0.0049,0.6765,0.1263,15653

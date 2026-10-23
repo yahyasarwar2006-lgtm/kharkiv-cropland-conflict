@@ -1,0 +1,29 @@
+name: agri
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  # core arrays / tables
+  - numpy
+  - pandas
+  # vector geospatial (AOI, 5 km grid, cropland mask)
+  - geopandas
+  - shapely
+  - pyproj
+  # raster geospatial (Sentinel-2 scenes, NDVI)
+  - rasterio
+  - rioxarray
+  - xarray
+  - dask
+  # fetching Sentinel-2 from Microsoft Planetary Computer
+  - pystac-client
+  - planetary-computer
+  # ERA5-Land climate data from the Copernicus Climate Data Store (CDS)
+  - cdsapi>=0.7.7
+  - netcdf4
+  # config, plotting, notebooks, tests
+  - pyyaml
+  - openpyxl   # Excel copy of the panel for viewing (Dutch Excel misreads comma CSVs)
+  - matplotlib
+  - jupyterlab
+  - pytest

@@ -1,0 +1,17 @@
+inputs,group,MAE increase
+season + place,True,0.0489
+  period,False,0.013
+  x,False,0.0062
+  y,False,0.0008
+  cropland_fraction,False,-0.0
+  expected,False,0.0782
+rain,True,0.0143
+  precip_sum,False,0.0006
+  precip_30d,False,0.0005
+  precip_60d,False,0.0022
+  rain_cum,False,0.0089
+temperature,True,0.0458
+  t2m_mean,False,0.018
+  t2m_anom,False,0.0031
+  gdd_cum,False,0.0207
+soil moisture,True,0.0003
