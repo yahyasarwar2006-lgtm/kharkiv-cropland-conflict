@@ -440,3 +440,22 @@ Written and committed 26 Oct 2026 (config `robustness:`).
   ML-adjusted anomaly; groups as in Experiment 5.
 - **Rule:** a result "holds" in a check if it keeps its sign and its 95% interval (25 km block bootstrap; clustered
   regression) still excludes 0; for (d) peak, "holds" means the interval still includes 0. All results reported.
+- **RESULTS (run 26 Oct 2026, after the plan was committed in e802b02)** — `scripts/run_robustness.py`,
+  `reports/robustness_results.csv`, `figures/robustness_forest.png`. The "main" rows reproduce Experiment 5 exactly.
+  Holds: main 8/8, **R1 nearby 7/8**, R2 10 km 8/8, R3 no weather adjustment 8/8.
+  - R1 (low cells within 25 km of a high cell: 197 / 110 / 151 low cells in 2022 / 23 / 24): 2022 peak −0.041
+    [−0.071, −0.008]; 2023 spring +0.054 [0.031, 0.079]; 2024 spring +0.064, **2024 peak +0.004 [−0.022, 0.028]
+    (does not hold)**, 2024 late +0.017 [0.001, 0.034]. (Regression rows identical by design: R1 only changes the
+    group comparison.)
+  - R2 (10 km; 2022 high / low 643 / 229): 2022 peak −0.060 [−0.080, −0.041]; 2023 spring +0.081; 2024 +0.035 /
+    +0.052 / +0.040; regression spring +0.009, late +0.008, peak +0.001 [−0.002, 0.004].
+  - R3 (no weather adjustment): 2022 peak −0.042 [−0.065, −0.021]; 2023 spring +0.077; 2024 +0.044 / +0.033 /
+    +0.038; regression spring +0.011, late +0.007, peak +0.001.
+- **Interpretation:** the 2022 lower peak, the greener spring of 2023 and 2024, and the regression pattern survive
+  all three checks. The 2024 greener PEAK disappears when only nearby low cells are used, so it is likely a
+  regional difference rather than something tied to exposure. Comparing with nearby cells shrinks the 2022 peak and
+  2023 spring differences by roughly a fifth to a third, as expected if part of the main gap is geography.
+  The weather adjustment barely changes these RELATIVE comparisons (R3): high and low cells share the same year's
+  weather, so the ML model matters for absolute anomalies (Experiments 3–4), much less for the group difference.
+- **Limits:** the checks are not independent of each other (same events, same model); R1 uses fewer low cells; none
+  of them removes unmeasured differences between places (crop mix, soils, farm structure).
