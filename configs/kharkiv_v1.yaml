@@ -150,6 +150,15 @@ exposure:
   robustness_buffer_km: 10      # Stage 9 check
   cluster_block_km: 25          # spatial blocks for clustered uncertainty (5 x 5 cells)
 
+# Stage 8 recovery (RQ3) — FIXED 26 Oct 2026 BEFORE any recovery result was looked at
+# (only the counts of cells per exposure history were seen). Plan: experiments.md "Experiment 6".
+recovery:
+  start_year: 2022              # season of first exposure
+  later_years: [2023, 2024]     # "ended" = high in start_year and < high_min_events in ALL later years
+  # reference = cells with 0 events in every war season (never exposed); "persistent" = high in all war seasons
+  # recovered in a later season if |gap to reference| <= the group's largest pre-war |gap| (same outcome)
+  # AND the 95% block-bootstrap interval of the gap includes 0
+
 paths:
   data_raw: "data/raw"
   data_interim: "data/interim"

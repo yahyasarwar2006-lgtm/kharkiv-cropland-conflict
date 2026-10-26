@@ -388,3 +388,22 @@ exposure). Settings in config `exposure:`. Wording rule: "associated with", neve
   spring and late season, so only the peak result has a clean pre-trend; the 2022 peak result is not replicated
   with UCDP; the model of normal is biased in 2022–23 at oblast level; spatial autocorrelation leaves few effective
   clusters. ACLED counts also reflect reporting. Evidence: suggestive, not conclusive; no causal claim.
+
+## Experiment 6 — Recovery where exposure ended (RQ3) — PLAN, written before any result
+Written and committed 26 Oct 2026; only the number of cells per exposure history was seen (config `recovery:`).
+- **Groups:** *ended* = high exposure (10+ ACLED events ≤ 5 km) in 2022 and fewer than 10 in
+  both 2023 and 2024 (~160 cells); *persistent* = high in 2022, 2023 and 2024 (185 cells, contrast);
+  *reference* = 0 events in all three war seasons (348 cells, "never exposed").
+- **Outcomes:** weather-adjusted anomaly per part of the season (spring, peak, late) and late-season shape
+  anomaly — the same as Experiment 5.
+- **Gap:** mean(group) − mean(reference) per season 2018–2024, with a 95% interval from a 25 km block bootstrap.
+  Comparing with never-exposed cells in the SAME year cancels the year-level model bias found in Experiment 5.
+- **Recovered:** in 2023 or 2024 a group counts as recovered on an outcome if |gap| ≤ its
+  largest pre-war |gap| (2018–21, same outcome) AND the interval includes 0. Time to recovery = first such season
+  (2023 or 2024), or "not by 2024".
+- **Also reported:** the same for the persistent group; per-cell relative anomaly (cell − reference mean that
+  season) for ended cells in 2022 vs 2024, as a map. Descriptive only.
+- **Known threats:** only two post-exposure seasons and yearly resolution; "ended" cells were retaken at different
+  times (spring vs September 2022), so 2022 mixes exposure and its end; groups are geographically different from the
+  reference (same problem as Experiment 5); mines and unexploded ordnance can keep fields unfarmed long after
+  fighting stops, which looks like "not recovered" without new events.
