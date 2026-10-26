@@ -110,5 +110,7 @@ Copernicus Sentinel-2 data (2018–2024), accessed via Microsoft Planetary Compu
 Change Service (CC BY 4.0) · ESA WorldCereal 2021 (CC BY 4.0) · Armed Conflict Location & Event Data (ACLED),
 acleddata.com (not redistributed here) · UCDP Georeferenced Event Dataset 26.1 (CC BY 4.0) · geoBoundaries.
 
+The code is released under the [MIT licence](LICENSE). The data sources above keep their own licences.
+
 ---
 Muhammad Yahya · BSc Business Analytics, University of Amsterdam · portfolio research project, 2026
