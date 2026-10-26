@@ -87,3 +87,15 @@ def exposure_group(events: pd.Series, low_max: int, high_min: int) -> pd.Series:
     group[events <= low_max] = "low"
     group[events >= high_min] = "high"
     return group
+
+
+def exposure_history(exposure: pd.DataFrame, start_year: int, later_years: list[int], high_min: int) -> pd.Series:
+    """Label each cell by its exposure over the war seasons (from season_exposure output):
+    'ended' = high (>= high_min) in start_year and below high_min in every later year,
+    'persistent' = high in every season, 'reference' = 0 events in every season, else 'other'."""
+    wide = exposure.pivot(index="cell_id", columns="year", values="events")[[start_year] + later_years]
+    label = pd.Series("other", index=wide.index)
+    label[(wide[start_year] >= high_min) & (wide[later_years] < high_min).all(axis=1)] = "ended"
+    label[(wide >= high_min).all(axis=1)] = "persistent"
+    label[(wide == 0).all(axis=1)] = "reference"
+    return label

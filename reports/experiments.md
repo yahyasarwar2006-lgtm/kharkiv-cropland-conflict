@@ -407,3 +407,23 @@ Written and committed 26 Oct 2026; only the number of cells per exposure history
   times (spring vs September 2022), so 2022 mixes exposure and its end; groups are geographically different from the
   reference (same problem as Experiment 5); mines and unexploded ordnance can keep fields unfarmed long after
   fighting stops, which looks like "not recovered" without new events.
+- **RESULTS (run 26 Oct 2026, after the plan above was committed in 102effc)** — `scripts/run_recovery.py`,
+  `reports/recovery_results.csv`, `figures/recovery_{gaps,map}.png`. Cells: ended 172, persistent 185,
+  reference 348, other 487.
+  - Gap to never-exposed cells (weather-adjusted; 2022 / 2023 / 2024; pre-war max |gap| in brackets):
+    *ended* — spring +0.045 / +0.086 / **+0.002** (0.044) → **recovered 2024**; peak −0.033 / +0.048 / +0.051
+    (0.028) → not by 2024; late +0.071 / +0.024 / +0.041 (0.040) → not by 2024; late shape +0.080 / +0.035 / +0.060
+    (0.037) → not by 2024.
+    *persistent* — spring +0.041 / +0.095 / +0.064 (0.042) → not by 2024; peak **−0.076** / +0.003 / +0.068 (0.057)
+    → "recovered 2023" by the rule; late +0.001 / +0.010 / +0.056 (0.032) → "recovered 2023"; late shape same.
+  - Ended cells show the largest late-season greenness in 2022 (+0.071; +0.080 unadjusted), when much of this area
+    was retaken only in September; both groups are greener than never-exposed cells at the 2024 peak (+0.05, +0.07).
+- **Interpretation:** by the pre-registered rule, cells where fighting stopped recovered in spring by 2024 but not
+  at the peak or late in the season: instead of returning to the never-exposed pattern they became GREENER than it
+  (like the persistent cells). The persistent group's "recovery in 2023" is a zero-crossing (from −0.076 in 2022 to
+  +0.068 in 2024), not a return to normal — a weakness of the rule when a gap changes sign; reported as found.
+  Ended and persistent cells differ clearly only in spring 2024 (+0.002 vs +0.064). The "greener than normal after
+  disruption" pattern is consistent with weedy/fallow or differently cropped fields (rule 4), mine contamination
+  keeping fields out of normal rotation, or a crop-mix shift — the data cannot separate these.
+- **Limits:** two post-exposure seasons at yearly resolution; the rule mis-labels sign changes as recovery; groups are
+  geographically different from the reference; same model-bias and spatial-autocorrelation caveats as Experiment 5.

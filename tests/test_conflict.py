@@ -59,3 +59,14 @@ def test_season_exposure_window_and_buffer(tmp_path):
     assert exp.loc["near", "events"] == 1      # Feb (pre-war) and Nov (after season) excluded
     assert exp.loc["far", "events"] == 0
     assert list(exposure_group(pd.Series([0, 3, 10]), 0, 10)) == ["low", "some", "high"]
+
+
+def test_exposure_history_labels():
+    from agridisrupt.conflict import exposure_history
+    exp = pd.DataFrame({
+        "cell_id": ["e", "e", "e", "p", "p", "p", "r", "r", "r", "o", "o", "o"],
+        "year": [2022, 2023, 2024] * 4,
+        "events": [50, 3, 9,   20, 15, 10,   0, 0, 0,   12, 2, 30],
+    })
+    label = exposure_history(exp, 2022, [2023, 2024], high_min=10)
+    assert label.to_dict() == {"e": "ended", "o": "other", "p": "persistent", "r": "reference"}
