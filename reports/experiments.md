@@ -427,3 +427,16 @@ Written and committed 26 Oct 2026; only the number of cells per exposure history
   keeping fields out of normal rotation, or a crop-mix shift — the data cannot separate these.
 - **Limits:** two post-exposure seasons at yearly resolution; the rule mis-labels sign changes as recovery; groups are
   geographically different from the reference; same model-bias and spatial-autocorrelation caveats as Experiment 5.
+
+## Experiment 7 — Robustness of the RQ2 results — PLAN, written before running
+Written and committed 26 Oct 2026 (config `robustness:`).
+- **Main results under test (Experiment 5, ACLED):** (a) 2022 peak: high − low < 0; (b) 2023 spring: high − low
+  > 0; (c) 2024 spring, peak and late: high − low > 0; (d) regression per log(1+events): spring > 0, late > 0,
+  peak ≈ 0 (interval includes 0).
+- **R1 Nearby comparison:** low-exposure cells kept only if their centre lies within 25 km of a high-exposure cell
+  in the same season (tackles the north/east vs south-west separation). Regression unchanged (uses all cells).
+- **R2 10 km distance:** exposure counted within 10 km instead of 5 km; groups and regression recomputed.
+- **R3 No weather adjustment:** the Stage 4 seasonal-baseline anomaly (leave-one-year-out pre-war) replaces the
+  ML-adjusted anomaly; groups as in Experiment 5.
+- **Rule:** a result "holds" in a check if it keeps its sign and its 95% interval (25 km block bootstrap; clustered
+  regression) still excludes 0; for (d) peak, "holds" means the interval still includes 0. All results reported.

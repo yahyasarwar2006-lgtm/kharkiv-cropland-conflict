@@ -150,6 +150,14 @@ exposure:
   robustness_buffer_km: 10      # Stage 9 check
   cluster_block_km: 25          # spatial blocks for clustered uncertainty (5 x 5 cells)
 
+# Stage 9 robustness checks — FIXED 26 Oct 2026 BEFORE running them.
+# Each re-runs the Stage 7 comparison (high - low per season and part; two-way FE regression). A main result
+# "holds" if it keeps its sign and its 95% interval still excludes 0. Plan: experiments.md "Experiment 7".
+robustness:
+  nearby_km: 25                 # R1: low cells only if their centre is within 25 km of a high cell's centre (same season)
+  # R2: exposure buffer = exposure.robustness_buffer_km (10 km) instead of buffer_km (5 km)
+  # R3: seasonal-baseline anomaly (Stage 4, no weather adjustment) instead of the ML-adjusted anomaly
+
 # Stage 8 recovery (RQ3) — FIXED 26 Oct 2026 BEFORE any recovery result was looked at
 # (only the counts of cells per exposure history were seen). Plan: experiments.md "Experiment 6".
 recovery:
