@@ -167,6 +167,11 @@ recovery:
   # recovered in a later season if |gap to reference| <= the group's largest pre-war |gap| (same outcome)
   # AND the 95% block-bootstrap interval of the gap includes 0
 
+# Stage 10 dashboard: small, public summary files only (historical, 5 km cells, seasonal; rule 6). Exposure is
+# published as a group (low / some / high), never as ACLED event counts or points (ACLED terms + ethics).
+dashboard:
+  assets_dir: "dashboard/assets"
+
 paths:
   data_raw: "data/raw"
   data_interim: "data/interim"

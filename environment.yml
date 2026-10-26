@@ -24,6 +24,7 @@ dependencies:
   # config, plotting, notebooks, tests
   - pyyaml
   - openpyxl   # Excel copy of the panel for viewing (Dutch Excel misreads comma CSVs)
+  - streamlit>=1.66  # dashboard (Stage 10); 1.59 + pyarrow 25 crashed on reruns (segfault)
   - matplotlib
   - jupyterlab
   - pytest

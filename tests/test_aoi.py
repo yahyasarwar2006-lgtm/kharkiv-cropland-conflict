@@ -1,5 +1,8 @@
+from pathlib import Path
+
 import geopandas as gpd
 import pandas as pd
+import pytest
 from shapely.geometry import box
 
 from agridisrupt.aoi import load_kharkiv_boundary, make_grid, select_pilot_block
@@ -7,13 +10,21 @@ from agridisrupt.config import load_config
 
 CONFIG = load_config("configs/kharkiv_v1.yaml")
 
+# The real-boundary tests need the downloaded oblast boundary (data/ is not in the repository).
+needs_boundary = pytest.mark.skipif(
+    not (Path(CONFIG["paths"]["data_raw"]) / "boundaries" / "ukraine_adm1.geojson").exists(),
+    reason="oblast boundary not downloaded; run scripts/download_boundary.py",
+)
 
+
+@needs_boundary
 def test_load_kharkiv_boundary_shape():
     boundary = load_kharkiv_boundary(CONFIG)
     assert len(boundary) == 1
     assert boundary.crs.to_string() == CONFIG["crs"]["grid"]
 
 
+@needs_boundary
 def test_load_kharkiv_boundary_area_is_plausible():
     boundary = load_kharkiv_boundary(CONFIG)
     area_km2 = boundary.geometry.area.iloc[0] / 1e6
@@ -22,6 +33,7 @@ def test_load_kharkiv_boundary_area_is_plausible():
     assert 25_000 < area_km2 < 37_000
 
 
+@needs_boundary
 def test_make_grid_cell_size_and_ids():
     boundary = load_kharkiv_boundary(CONFIG)
     cell_size_m = CONFIG["grid"]["cell_size_m"]
@@ -35,6 +47,7 @@ def test_make_grid_cell_size_and_ids():
     assert grid.intersects(boundary.union_all()).all()
 
 
+@needs_boundary
 def test_make_grid_cell_count_is_plausible():
     boundary = load_kharkiv_boundary(CONFIG)
     cell_size_m = CONFIG["grid"]["cell_size_m"]
